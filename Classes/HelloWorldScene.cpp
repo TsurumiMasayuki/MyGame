@@ -101,10 +101,48 @@ bool HelloWorld::init()
 		this->addChild(label, 1);
 	}
 
-	Sprite *sprite = Sprite::create("Cursor.png");
+	sprite = Sprite::create("Revolver.png");
 	this->addChild(sprite);
 
+	sprite->setPosition(Vec2(visibleSize.width - 128, visibleSize.height - 128));
+	sprite->setScale(3);
+	sprite->setAnchorPoint(Vec2(0.5f, 0.5f));
+
+	this->scheduleUpdate();
+
+	alpha = 255;
+	nextPos = 0;
+
+	//¶ã
+	points[0] = Vec2(visibleSize.width - 128, visibleSize.height - 128);
+	//‰Eã
+	points[1] = Vec2(128, visibleSize.height - 128);
+	//‰E‰º
+	points[2] = Vec2(128, 128);
+	//¶‰º
+	points[3] = Vec2(visibleSize.width - 128, 128);
+
 	return true;
+}
+
+void HelloWorld::update(float delta)
+{
+	Vec2 pos = sprite->getPosition();
+	if ((points[nextPos] - pos).getLength() < 1)
+	{
+		nextPos += 1;
+		if (nextPos == 4)
+			nextPos = 0;
+	}
+
+	Vec2 velocity = points[nextPos] - pos;
+	velocity.normalize();
+	pos = pos + velocity;
+	sprite->setPosition(pos);
+
+	/*alpha -= 255 / 5 * delta;
+	if (alpha >= 0)
+		sprite->setOpacity((int)alpha);*/
 }
 
 

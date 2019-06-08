@@ -33,12 +33,18 @@ public:
     static cocos2d::Scene* createScene();
 
     virtual bool init();
+	void update(float delta) override;
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+
+	cocos2d::Sprite* sprite;
+	float alpha;
+	int nextPos;
+	cocos2d::Vec2 points[4];
 };
 
 #endif // __HELLOWORLD_SCENE_H__
