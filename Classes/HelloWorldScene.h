@@ -41,27 +41,10 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 
-	cocos2d::Sprite* sprite;
-	cocos2d::Sprite* catSprite;
-	cocos2d::Sprite* laserSprite;
-	float alpha;
-	int nextPos;
-	cocos2d::Vec2 points[4];
-	cocos2d::Vec2 catMove;
-
-	int animIndex;
-	float animTime;
-	bool animPingPongFlag;
-	cocos2d::Rect animRects[3];
-
-	float scaleX;
-	float scaleY;
-
 private:
-	bool catAnimEnd;
-
-	void CatAnim();
-	void LaserAnim();
+	cocos2d::Sprite* spriteArray[100];
+	//cocos2d::Sprite* sprite;
+	//cocos2d::Sprite* sprite2;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

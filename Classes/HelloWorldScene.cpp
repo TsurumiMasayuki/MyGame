@@ -102,131 +102,61 @@ bool HelloWorld::init()
 		this->addChild(label, 1);
 	}
 
-	sprite = Sprite::create("Revolver.png");
+	/*sprite = Sprite::create("Revolver.png");
 	this->addChild(sprite);
 
 	sprite->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	sprite->setScale(3);
-	sprite->setAnchorPoint(Vec2(0.0f, 1.0f));
+	sprite->setAnchorPoint(Vec2(0.5f, 0.5f));
 	sprite->getTexture()->setAliasTexParameters();
-	//sprite->setColor(Color3B::RED);
 
-	catSprite = Sprite::create("Sample01.png");
-	this->addChild(catSprite);
-	catSprite->setPosition(Vec2(0, visibleSize.height / 2));
-	catSprite->setScale(3);
-	catSprite->getTexture()->setAliasTexParameters();
+	sprite2 = Sprite::create("Player.png");
+	this->addChild(sprite2);
 
-	animIndex = 0;
-	animRects[0] = Rect(0, 64, 32, 32);
-	animRects[1] = Rect(32, 64, 32, 32);
-	animRects[2] = Rect(64, 64, 32, 32);
+	sprite2->setPosition(Vec2(300, visibleSize.height / 2));
+	sprite2->setAnchorPoint(Vec2(0.5f, 0.5f));
+	sprite2->getTexture()->setAliasTexParameters();*/
 
-	catSprite->setTextureRect(animRects[0]);
-	catMove = Vec2(10, 0);
+	srand(time(nullptr));
+	for (int i = 0; i < 2; i++)
+	{
+		spriteArray[i] = Sprite::create("Player.png");
+		this->addChild(spriteArray[i]);
+		spriteArray[i]->setPosition(visibleSize.width / 2 + i * 50, visibleSize.height / 2);
+		//spriteArray[i]->setPosition(visibleSize.width - 32, visibleSize.height - 32);
+		//float posX = (float)rand() / RAND_MAX * 600;
+		//float posY = (float)rand() / RAND_MAX * 500;
+		//spriteArray[i]->setPosition(posX, posY);
 
-	laserSprite = Sprite::create("Pixel.png");
-	this->addChild(laserSprite);
-	laserSprite->setAnchorPoint(Vec2(0, 0.5f));
-	laserSprite->setPosition(Vec2(0, visibleSize.height / 2));
-	laserSprite->setRotation(-30);
+		spriteArray[i]->getTexture()->setAliasTexParameters();
+		spriteArray[i]->setAnchorPoint(Vec2(0, 0));
+		//spriteArray[i]->setColor(Color3B::RED);
+
+		//spriteArray[i]->runAction(JumpBy::create(3.0f, Vec2(300 + (i * 50), 0), 50, 1));
+
+		//float movX = (float)rand() / RAND_MAX * 600;
+		//float movY = (float)rand() / RAND_MAX * 500;
+		//spriteArray[i]->runAction(MoveTo::create(5.0f, Vec2(movX, movY)));
+
+		//spriteArray[i]->runAction(MoveTo::create(5.0f, Vec2(32, visibleSize.height - 32)));
+		//spriteArray[i]->runAction(FadeOut::create(5.0f));
+		//spriteArray[i]->runAction(RotateTo::create(1, Vec3(0, 0, 60)));
+		//spriteArray[i]->runAction(TintTo::create(3.0f, Color3B::BLUE));
+	}
+
+	spriteArray[1]->setOpacity(0);
+
+	spriteArray[0]->runAction(FadeOut::create(2.0f));
+	spriteArray[1]->runAction(FadeIn::create(2.0f));
 
 	this->scheduleUpdate();
-
-	alpha = 255;
-	nextPos = 0;
-
-	//¶ã
-	points[0] = Vec2(visibleSize.width - 128, visibleSize.height - 128);
-	//‰Eã
-	points[1] = Vec2(128, visibleSize.height - 128);
-	//‰E‰º
-	points[2] = Vec2(128, 128);
-	//¶‰º
-	points[3] = Vec2(visibleSize.width - 128, 128);
-	catAnimEnd = false;
 	return true;
 }
 
 void HelloWorld::update(float delta)
 {
-	float rotation = sprite->getRotation();
-	sprite->setRotation(rotation + 1);
 
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	animTime += delta;
-	CatAnim();
-	LaserAnim();
-	//Vec2 pos = catSprite->getPosition();
-	//if (pos.x >= visibleSize.width || pos.x <= 0)
-	//	catMove *= -1;
-	//pos += catMove;
-	//catSprite->setPosition(pos);
-
-	//catSprite->setFlippedX(catMove.x < 0);
-
-	//animTime += delta;
-	//if (animTime >= 0.25f)
-	//{
-	//	animTime = 0;
-	//	if (!animPingPongFlag)
-	//		animIndex += 1;
-	//	else
-	//		animIndex -= 1;
-	//}
-
-	//if (animIndex < 0 || animIndex > 2)
-	//	animPingPongFlag = !animPingPongFlag;
-
-	//animIndex = std::min(2, std::max(0, animIndex));
-
-	//catSprite->setTextureRect(animRects[animIndex]);
-
-	//Color3B color = sprite->getColor();
-	//float blue = color.b;
-	//float red = color.r;
-	//blue += 255 / 3 * delta;
-	//red -= 255 / 3 * delta;
-
-	//if (blue >= 255)
-	//	blue = 255;
-	//if (red <= 0)
-	//	red = 0;
-
-	//color.b = blue;
-	//color.r = red;
-
-	//sprite->setColor(color);
-
-	//Vec2 pos = sprite->getPosition();
-	//if ((points[nextPos] - pos).getLength() < 1)
-	//{
-	//	nextPos += 1;
-	//	if (nextPos == 4)
-	//		nextPos = 0;
-	//}
-
-	//Vec2 velocity = points[nextPos] - pos;
-	//velocity.normalize();
-	//pos = pos + velocity;
-	//sprite->setPosition(pos);
-
-	/*alpha -= 255 / 5 * delta;
-	if (alpha >= 0)
-		sprite->setOpacity((int)alpha);*/
-
-		//float alpha1 = sprite->getOpacity();
-		//float alpha2 = sprite2->getOpacity();
-
-		//alpha1 -= 255 / 5 * delta;
-		//if (alpha1 >= 0)
-		//	sprite->setOpacity((int)alpha1);
-
-		//alpha2 += 255 / 5 * delta;
-		//if (alpha2 <= 255)
-		//	sprite2->setOpacity((int)alpha2);
 }
-
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
@@ -237,50 +167,4 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
 	//EventCustom customEndEvent("game_scene_close_event");
 	//_eventDispatcher->dispatchEvent(&customEndEvent);
-}
-
-void HelloWorld::CatAnim()
-{
-	if (catAnimEnd) return;
-
-	if (animTime >= 0.5f)
-	{
-		animTime = 0;
-		if (!animPingPongFlag)
-			animIndex += 1;
-		else
-			animIndex -= 1;
-	}
-
-	if (animIndex == 3)
-	{
-		animIndex = 1;
-		catAnimEnd = true;
-		laserSprite->setPosition(catSprite->getPosition());
-	}
-
-	catSprite->setTextureRect(animRects[animIndex]);
-	Vec2 pos = catSprite->getPosition();
-	pos += Vec2(1, 0);
-	catSprite->setPosition(pos);
-}
-
-void HelloWorld::LaserAnim()
-{
-	if (!catAnimEnd) return;
-
-	float rotation = laserSprite->getRotation();
-	if (rotation < 30)
-		rotation += 0.5f;
-	laserSprite->setRotation(rotation);
-
-	if (scaleY < 50)
-		scaleX += 200;
-	laserSprite->setScaleX(scaleX);
-
-	if (scaleX < 200 * 60 * 1.5f && scaleY < 50)
-		scaleY += 2.5f;
-	else if (scaleY > 0)
-		scaleY -= 2.5f;
-	laserSprite->setScaleY(scaleY);
 }
